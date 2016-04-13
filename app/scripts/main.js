@@ -1,7 +1,5 @@
-
 const url = '//services.sapo.pt/Codebits/listbadges?callback=JsonP',
-		beginBtn = document.getElementById('begin');
-		beginBtn.addEventListener('click', begin, false);
+    beginBtn = document.getElementById('begin');
 
 var selectedBadgets = [];
 // Fisher-Yates Algorithm :: http://bost.ocks.org/mike/shuffle/
@@ -53,17 +51,18 @@ function imgCreate(imgObj) {
     imgEl.width = 128;
     return imgEl;
 }
-var play = function() {
+
+function play() {
     'use strict';
     const insideEl = this;
     if (document.App.maybe1 === this) {
-        // Same elemet was clicked. Do nothing
+        /* Same elemet was clicked. Do nothing */
         triggerClass(insideEl, 'picked');
         document.App.maybe1 = '';
         return;
     }
     if (document.App.maybe1 !== '' && document.App.maybe2 !== '') {
-        // Both elements is already selected. Do nothing 
+        /* Both elements is already selected. Do nothing */
         return;
     } else {
         triggerClass(insideEl, 'picked');
@@ -92,11 +91,11 @@ var play = function() {
             document.App.maybe1 = '';
             document.App.maybe2 = '';
             document.App.level -= 1;
-            if(document.App.level === 0){
-            	win(document.App.time);
+            if (document.App.level === 0) {
+                win(document.App.time);
             }
         } else {
-            var timeout2 = setTimeout(function() {
+            setTimeout(function() {
                 triggerClass(document.App.maybe1, 'picked');
                 triggerClass(document.App.maybe2, 'picked');
                 document.App.maybe1 = '';
@@ -104,13 +103,14 @@ var play = function() {
             }, 1000);
         }
     }
-};
+}
 
-function win(time){
-	clearTimeout(document.timeout);
-	let tweet = `https://twitter.com/intent/tweet/?text="Memory JavaScript FTW em: ${time}"`;
- 	win = window.open(tweet, '_blank');
-  	win.focus();
+function win(time) {
+    'use strict';
+    clearTimeout(document.timeout);
+    let tweet = `https://twitter.com/intent/tweet/?text="Memory JavaScript FTW em: ${time}"`,
+    tab = window.open(tweet, '_blank');
+    tab.focus();
 }
 
 function makeBoardGame() {
@@ -141,6 +141,14 @@ document.App.maybe1 = '';
 document.App.maybe2 = '';
 document.App.time = 0;
 document.App.level = 9;
+
+
+function increaseTime() {
+    'use strict';
+    const timerEl = document.getElementById('timer');
+    timerEl.innerHTML = (document.App.time += 1);
+}
+
 function begin() {
     'use strict';
     this.style.display = 'none';
@@ -151,12 +159,7 @@ function begin() {
         increaseTime();
     }, 1000);
 }
-
-function increaseTime(){
-	const timerEl = document.getElementById('timer');
-	timerEl.innerHTML = (document.App.time += 1);
-}
-
+beginBtn.addEventListener('click', begin, false);
 requestJSONP(); // Preload JSON and Create Images (selectedBadgets)
 var JsonP = function(badgets) {
     'use strict';
